@@ -1,0 +1,49 @@
+/* Albert Heijn Brand Colors - Official Palette */
+:root {
+  /* Primary Blue */
+  --ah-blue-dark: #00455c;
+  --ah-blue: #00ade6;
+  --ah-blue-light: #d9f3fb;
+  
+  /* Bonus Orange */
+  --ah-bonus-dark: #663000;
+  --ah-bonus: #ff7900;
+  --ah-bonus-light: #ffebd9;
+  
+  /* Greyscale */
+  --ah-grey-60: #303030;
+  --ah-grey-40: #595959;
+  --ah-grey-20: #838383;
+  --ah-grey: #acacac;
+  --ah-grey-light-20: #e0e0e0;
+  --ah-grey-light-40: #f5f5f5;
+  
+  /* Functional Colors */
+  --ah-success: #69bd86;
+  --ah-success-light: #e9f5ed;
+  --ah-error: #ea3d3d;
+  --ah-error-light: #ffdedb;
+  --ah-warning: #fcdd9c;
+  --ah-warning-light: #fef7e6;
+}
+
+/* Custom animations */
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+}
+
+/* Ensure smooth transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
