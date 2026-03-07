@@ -65,6 +65,13 @@ export default function Presentation() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [fullscreenAvailable, setFullscreenAvailable] = useState(false);
   const presentationRef = useRef<HTMLDivElement>(null);
+  const cinemaMode = (() => {
+    if (typeof window === 'undefined') return false;
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get('mode');
+    const cinema = params.get('cinema');
+    return mode === 'cinema' || cinema === '1' || cinema === 'true';
+  })();
 
   // Check if fullscreen API is available
   useEffect(() => {
@@ -79,18 +86,59 @@ export default function Presentation() {
     setFullscreenAvailable(!!isAvailable);
   }, []);
 
-  // Calculate scale based on screen size
+  // Calculate scale based on available container size
   useEffect(() => {
+    let rafId: number | null = null;
+
     const updateScale = () => {
-      const scaleX = window.innerWidth / REFERENCE_WIDTH;
-      const scaleY = window.innerHeight / REFERENCE_HEIGHT;
-      const newScale = Math.min(scaleX, scaleY); // Auto-fit to screen
-      setScale(newScale);
+      const container = presentationRef.current;
+      if (!container) return;
+
+      const rect = container.getBoundingClientRect();
+      const viewportWidth = rect.width || window.innerWidth;
+      const viewportHeight = rect.height || window.innerHeight;
+
+      const scaleX = viewportWidth / REFERENCE_WIDTH;
+      const scaleY = viewportHeight / REFERENCE_HEIGHT;
+      const newScale = Math.max(0.1, Math.min(scaleX, scaleY));
+
+      setScale((prevScale) => (
+        Math.abs(prevScale - newScale) < 0.001 ? prevScale : newScale
+      ));
     };
 
-    updateScale();
-    window.addEventListener('resize', updateScale);
-    return () => window.removeEventListener('resize', updateScale);
+    const scheduleUpdate = () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+      rafId = requestAnimationFrame(updateScale);
+    };
+
+    scheduleUpdate();
+
+    const resizeObserver = new ResizeObserver(scheduleUpdate);
+    if (presentationRef.current) {
+      resizeObserver.observe(presentationRef.current);
+    }
+
+    window.addEventListener('resize', scheduleUpdate);
+    window.addEventListener('orientationchange', scheduleUpdate);
+    document.addEventListener('fullscreenchange', scheduleUpdate);
+    window.visualViewport?.addEventListener('resize', scheduleUpdate);
+    window.visualViewport?.addEventListener('scroll', scheduleUpdate);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', scheduleUpdate);
+      window.removeEventListener('orientationchange', scheduleUpdate);
+      document.removeEventListener('fullscreenchange', scheduleUpdate);
+      window.visualViewport?.removeEventListener('resize', scheduleUpdate);
+      window.visualViewport?.removeEventListener('scroll', scheduleUpdate);
+
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    };
   }, []);
 
   // Track fullscreen state changes
@@ -166,7 +214,11 @@ export default function Presentation() {
   };
 
   return (
-    <div ref={presentationRef} className="relative w-full h-screen bg-white overflow-hidden flex items-center justify-center">
+    <div
+      ref={presentationRef}
+      className="relative w-full h-screen bg-white overflow-hidden flex items-center justify-center"
+      style={{ height: '100dvh' }}
+    >
       {/* Scaled presentation container */}
       <div
         className="relative"
@@ -192,43 +244,47 @@ export default function Presentation() {
         </AnimatePresence>
 
         {/* Navigation Controls */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 z-10">
-          <button
-            onClick={prevSlide}
-            disabled={currentSlide === 0}
-            className="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
+        {!cinemaMode && (
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 z-10">
+            <button
+              onClick={prevSlide}
+              disabled={currentSlide === 0}
+              className="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
 
-          <div className="text-sm font-medium text-gray-600 bg-white px-4 py-2 rounded-full shadow-md">
-            {currentSlide + 1} / {slides.length}
+            <div className="text-sm font-medium text-gray-600 bg-white px-4 py-2 rounded-full shadow-md">
+              {currentSlide + 1} / {slides.length}
+            </div>
+
+            <button
+              onClick={nextSlide}
+              disabled={currentSlide === slides.length - 1}
+              className="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
           </div>
-
-          <button
-            onClick={nextSlide}
-            disabled={currentSlide === slides.length - 1}
-            className="p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-            aria-label="Next slide"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-        </div>
+        )}
 
         {/* Progress Bar */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-200 z-10">
-          <motion.div
-            className="h-full"
-            style={{ backgroundColor: 'var(--ah-blue)' }}
-            initial={{ width: '0%' }}
-            animate={{ width: `${((currentSlide + 1) / slides.length) * 100}%` }}
-            transition={{ duration: 0.3 }}
-          />
-        </div>
+        {!cinemaMode && (
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-200 z-10">
+            <motion.div
+              className="h-full"
+              style={{ backgroundColor: 'var(--ah-blue)' }}
+              initial={{ width: '0%' }}
+              animate={{ width: `${((currentSlide + 1) / slides.length) * 100}%` }}
+              transition={{ duration: 0.3 }}
+            />
+          </div>
+        )}
 
         {/* Fullscreen Toggle */}
-        {fullscreenAvailable && (
+        {fullscreenAvailable && !cinemaMode && (
           <button
             onClick={toggleFullscreen}
             className="absolute top-8 right-8 p-3 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-all"

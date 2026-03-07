@@ -1,6 +1,0 @@
-@echo off
-cd /d "%~dp0"
-echo Starting deCompose Presentation...
-echo.
-echo Opening browser...
-python -m http.server 8080
