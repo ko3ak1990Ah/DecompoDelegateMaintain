@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Run - deCompose Presentation</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 { color: #0066cc; }
+        .method {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #0066cc;
+        }
+        code {
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', monospace;
+        }
+        .terminal {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Monaco', monospace;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>deCompose Presentation - Offline Guide</h1>
+
+    <p>Due to browser security restrictions, modern presentations need to run through a local server. Here's how to run this offline:</p>
+
+    <div class="method">
+        <h2>Method 1: Python (Mac/Linux/Windows)</h2>
+        <p>Open Terminal/Command Prompt in this folder and run:</p>
+        <div class="terminal">python3 -m http.server 8080</div>
+        <p>Then open: <a href="http://localhost:8080/DecompoDelegateMaintain/">http://localhost:8080/DecompoDelegateMaintain/</a></p>
+    </div>
+
+    <div class="method">
+        <h2>Method 2: Node.js (if installed)</h2>
+        <div class="terminal">npx serve</div>
+        <p>Then open the URL it shows (usually http://localhost:3000)</p>
+    </div>
+
+    <div class="method">
+        <h2>Method 3: VS Code</h2>
+        <p>Install "Live Server" extension, right-click <code>index.html</code> then "Open with Live Server"</p>
+    </div>
+
+    <div class="method">
+        <h2>Method 4: One-Click Launcher (Mac)</h2>
+        <p>Double-click the <code>start.command</code> file (if provided)</p>
+    </div>
+
+    <hr style="margin: 40px 0;">
+    <p><strong>Why can't I just double-click index.html?</strong></p>
+    <p>Modern browsers block JavaScript modules when loaded from <code>file://</code> URLs for security. A local server is required.</p>
+</body>
+</html>

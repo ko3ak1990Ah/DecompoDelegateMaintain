@@ -126,11 +126,12 @@ export default function NoteFeatureSlide() {
           </div>
 
           {/* Right side - Mobile App Image/GIF */}
-          <div className="flex items-center justify-center" style={{ height: "600px" }}>
+          <div className="flex items-start justify-center">
             <div
-              className="rounded-3xl border-4 overflow-hidden h-full flex items-center justify-center"
+              className="rounded-3xl border-4 overflow-hidden w-fit"
               style={{
                 borderColor: "var(--ah-blue)",
+                height: "580px",
               }}
             >
               <img
