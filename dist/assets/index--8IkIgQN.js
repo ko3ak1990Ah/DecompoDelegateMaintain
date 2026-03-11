@@ -184,7 +184,7 @@ Error generating stack: `+d.message+`
 `,"    ",o.jsx("span",{style:{color:"var(--ah-blue-dark)"},children:"fun"})," status(): Int",`
 `,`}
 
-`,o.jsx("span",{style:{color:"var(--ah-blue-dark)"},children:"class"})," ",o.jsx("span",{className:"font-bold",children:"ConsolePrinter"})," : Printer ",`{ /*...*/ }
+`,o.jsx("span",{style:{color:"var(--ah-blue-dark)"},children:"class"})," ",o.jsx("span",{className:"font-bold",children:"DefaultPrinter"})," : Printer ",`{ /*...*/ }
 
 `,o.jsx("span",{style:{color:"var(--ah-blue-dark)"},children:"class"})," ",o.jsx("span",{className:"font-bold",children:"LoggingPrinter"}),"(",o.jsx("span",{style:{color:"var(--ah-blue-dark)"},children:"private val"})," delegate: Printer) : Printer ",o.jsx("span",{style:{color:"var(--ah-blue-dark)"},children:"by"})," delegate ",`{
 `,"    ",o.jsx("span",{style:{color:"var(--ah-blue-dark)"},children:"override fun"})," print(message: String) ",`{

@@ -54,7 +54,7 @@ export default function DelegationPatternSlide() {
                 {'    '}<span style={{ color: 'var(--ah-blue-dark)' }}>fun</span> status(): Int{'\n'}
                 {'}\n\n'}
 
-                <span style={{ color: 'var(--ah-blue-dark)' }}>class</span> <span className="font-bold">ConsolePrinter</span> : Printer {'{ /*...*/ }\n\n'}
+                <span style={{ color: 'var(--ah-blue-dark)' }}>class</span> <span className="font-bold">DefaultPrinter</span> : Printer {'{ /*...*/ }\n\n'}
 
                 <span style={{ color: 'var(--ah-blue-dark)' }}>class</span> <span className="font-bold">LoggingPrinter</span>(<span style={{ color: 'var(--ah-blue-dark)' }}>private val</span> delegate: Printer) : Printer <span style={{ color: 'var(--ah-blue-dark)' }}>by</span> delegate {'{\n'}
                 {'    '}<span style={{ color: 'var(--ah-blue-dark)' }}>override fun</span> print(message: String) {'{\n'}
