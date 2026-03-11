@@ -29,7 +29,7 @@ export default function TitleSlide() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Scaling VMs
+            A real-world guide to modular ViewModels
           </motion.p>
 
           {/* Author info */}

@@ -15,6 +15,7 @@ import NoteFeatureSlide from './slides/NoteFeatureSlide';
 import NoteCapabilitiesSlide from './slides/NoteCapabilitiesSlide';
 import NoteDelegateSlide from './slides/NoteDelegateSlide';
 import ExcessiveProblemSlide from './slides/ExcessiveProblemSlide';
+import ContractSlide from './slides/ContractSlide';
 import NoteDelegateImplSlide from './slides/NoteDelegateImplSlide';
 import ViewModelWithDelegationSlide from './slides/ViewModelWithDelegationSlide';
 import DisplayViewModelOutputsSlide from './slides/DisplayViewModelOutputsSlide';
@@ -41,8 +42,9 @@ const slides = [
   NoteFeatureSlide,
   NoteCapabilitiesSlide,
   NoteDelegateSlide,
-  ExcessiveProblemSlide,
   NoteDelegateImplSlide,
+  ExcessiveProblemSlide,
+  ContractSlide,
   ViewModelWithDelegationSlide,
   DisplayViewModelOutputsSlide,
   IntegrationProblemSlide,
