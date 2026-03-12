@@ -109,9 +109,6 @@ export default function NoteDelegateImplSlide() {
                     {'    '}<span style={{ color: '#6B46C1' }}>private val</span> isMyListSearch: <span style={{ color: '#047857' }}>Boolean</span> =
                     {'\n'}        savedStateHandle.get{'<'}<span style={{ color: '#047857' }}>Boolean</span>{'>('}IS_MY_LIST_SEARCH) == <span style={{ color: '#DC2626' }}>true</span>
                     {'\n\n'}
-                    {'    '}<span style={{ color: '#6B46C1' }}>private val</span> allowAddBanners: <span style={{ color: '#047857' }}>Boolean</span> =
-                    {'\n'}        savedStateHandle.get{'<'}<span style={{ color: '#047857' }}>Boolean</span>{'>('}ARG_SHOW_AD_BANNERS) != <span style={{ color: '#DC2626' }}>false</span>
-                    {'\n\n'}
                     {'    '}<span style={{ color: '#6B46C1' }}>private val</span> _state: <span style={{ color: '#047857' }}>MutableStateFlow</span>{'<'}<span style={{ color: '#047857' }}>SmartNoteState</span>{'>'} =
                     {'\n'}        MutableStateFlow(SmartNoteState(<span style={{ color: '#DC2626' }}>null</span>))
                     {'\n\n'}
